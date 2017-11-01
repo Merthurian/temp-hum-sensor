@@ -47,22 +47,30 @@ if __name__ == '__main__':
     ser = getPort()
 
     if ser == None:
+        print "Logger not found on any serial port"
         exit
-      
-    with open(datetime.date.today().strftime('%d-%m-%y') + '.csv', 'a+') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',', quotechar='|',lineterminator='\n')
+
+    while True:
+        today = datetime.date.today()
+
+        while today == datetime.date.today():
+
+            filename = today.strftime('%d-%m-%Y') + '.csv'
+
+            with open(filename, 'a+') as csvfile:
+                writer = csv.writer(csvfile, delimiter=',', quotechar='|',lineterminator='\n')
             
-        while True:
-            ser.write(b'next')
-            response = ser.readline().decode('ascii').strip()            
+                while today == datetime.date.today():
+                    ser.write(b'next')
+                    response = ser.readline().decode('ascii').strip()            
 
-            data = response.split()
+                    data = response.split()
 
-            today = datetime.date.today().strftime('%d-%m-%y')
-            timeNow = datetime.datetime.now().strftime('%H:%M:%S')
+                    today = datetime.date.today().strftime('%d-%m-%y')
+                    timeNow = datetime.datetime.now().strftime('%H:%M:%S')
 
-            writer.writerow([today, timeNow, data[0], data[1]])
+                    writer.writerow([today, timeNow, data[0], data[1]])
 
-            time.sleep(1)
+                    time.sleep(1)
         
 
