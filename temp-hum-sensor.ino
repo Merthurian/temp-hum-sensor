@@ -43,7 +43,7 @@ void loop(void)
       delay(100);
     }
     else if (inBuffer == "hello")
-      Serial.println("hello");
+      Serial.println("temp-hum-sensor");
   }
 }
 

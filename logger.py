@@ -38,7 +38,7 @@ def getPort():
 
         response = response.strip()
 
-        if response == (b'hello').decode('ascii'):
+        if response == (b'temp-hum-sensor').decode('ascii'):
             return ser
 
     return None
