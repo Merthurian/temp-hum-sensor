@@ -6,11 +6,11 @@ import datetime
 import time
 import requests
 
-prtg_host = ''
-prtg_host_port = ''
-prtg_sensor_token ''
+prtg_host = '10.228.0.10'
+prtg_host_port = '5050'
+prtg_sensor_token = 'D92C6864-F658-4870-805C-5F71866B5178'
 
-interval = 60
+interval = 1
 
 def getPort():
     """ Looks for the arduino on all available com ports
@@ -82,6 +82,8 @@ def send_json(data_json):
 
         prtg_request_URL = 'http://' + prtg_host + ':' + prtg_host_port + '/' + prtg_sensor_token + '?content=' + json_string
 
+        print(prtg_request_URL)
+
         request = requests.get(prtg_request_URL)
 
     except:
@@ -91,7 +93,7 @@ if __name__ == '__main__':
     ser = getPort()
 
     if ser == None:
-        print "Logger not found on any serial port"
+        print('Logger not found on any serial port')
         exit
 
     while True:
@@ -115,7 +117,7 @@ if __name__ == '__main__':
 
                     writer.writerow([today, timeNow, data[0], data[1]])
 
-                    send_json(temp_hum_to_json(data))
+                    send_json(temp_hum_to_json(data))                
                     
                     time.sleep(interval)
         
